@@ -6,6 +6,24 @@ Includes support to integrate with [html-webpack-plugin](https://www.npmjs.com/p
 [![npm version](https://badge.fury.io/js/modernizr-webpack-plugin.svg)](https://badge.fury.io/js/modernizr-webpack-plugin)
 [![Build Status](https://travis-ci.org/alexpalombaro/modernizr-webpack-plugin.svg?branch=master)](https://travis-ci.org/alexpalombaro/modernizr-webpack-plugin)
 
+> This fork provides an additional option to add modernizr bundle to existing vendor bundle
+> example: 
+> ```
+> new ModernizrWebpackPlugin({
+>        filename: "vendor.bundle",
+>        addToExistingBundle: true,
+>        noChunk: true,
+>        minify: true,
+>        "options": [
+>            "setClasses"
+>        ],
+>        "feature-detects": [
+>            "test/touchevents"
+>        ]
+>    }), 
+> ```
+> output: vendor contains modernizr and other libs if you configure before..
+
 ## Install
 
 ```sh
