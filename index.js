@@ -30,7 +30,8 @@ function ModernizrPlugin(options) {
     filename: 'modernizr-bundle.js',
     htmlWebpackPlugin: true,
     minify: process.env.NODE_ENV === 'production',
-    noChunk: false
+    noChunk: false,
+    addToExistingBundle: false
   }, options);
 }
 
@@ -145,25 +146,29 @@ ModernizrPlugin.prototype.apply = function (compiler) {
           plugins = plugin ? compiler.options.plugins.filter(filterFunct) : [];
           break;
       }
-      plugins.forEach(function (plugin) {
+      if(!self.addToExistingBundle) {
+        plugins.forEach(function (plugin) {
         var filePath = self.createOutputPath(self.oFilename, publicPath,
           plugin.options.hash ? compilation.hash : null);
         self.htmlWebpackPluginInject(plugin, path.basename(filename, '.js'), filePath,
           output.length, buildOptions.noChunk)
-      });
+        });
+      }
       cb();
     })
   });
 
   compiler.plugin('emit', function (compilation, cb) {
-    var source = new ConcatSource();
-
+    var filename = self.oFilename,
+        source = new ConcatSource();
+    
+    if(self.addToExistingBundle) {
+      source.add(compilation.assets[filename]._source);
+    }
+    
     source.add(self.modernizrOutput);
 
-    var filename = self.oFilename;
     compilation.assets[filename] = new CachedSource(source);
-
-    cb();
   });
 };
 
