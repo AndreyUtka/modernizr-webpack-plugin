@@ -23,7 +23,7 @@ Includes support to integrate with [html-webpack-plugin](https://www.npmjs.com/p
 >        ]
 >    }), 
 > ```
-> output: vendor contains modernizr and other libs if you configure before..
+> output: vendor contains modernizr and other libs if you configure webpack output before..
 
 ## Install
 
