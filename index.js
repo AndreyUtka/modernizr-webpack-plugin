@@ -112,6 +112,7 @@ ModernizrPlugin.prototype.apply = function (compiler) {
         output = self.minifySource(output, buildOptions.minify);
       }
       self.modernizrOutput = output;
+      self.addToExistingBundle = buildOptions.addToExistingBundle;
       var publicPath = self.resolvePublicPath(compilation, buildOptions.filename);
       var filename = buildOptions.filename;
       if (/\[hash\]/.test(buildOptions.filename)) {
@@ -148,10 +149,10 @@ ModernizrPlugin.prototype.apply = function (compiler) {
       }
       if(!self.addToExistingBundle) {
         plugins.forEach(function (plugin) {
-        var filePath = self.createOutputPath(self.oFilename, publicPath,
-          plugin.options.hash ? compilation.hash : null);
-        self.htmlWebpackPluginInject(plugin, path.basename(filename, '.js'), filePath,
-          output.length, buildOptions.noChunk)
+          var filePath = self.createOutputPath(self.oFilename, publicPath,
+            plugin.options.hash ? compilation.hash : null);
+          self.htmlWebpackPluginInject(plugin, path.basename(filename, '.js'), filePath,
+            output.length, buildOptions.noChunk)
         });
       }
       cb();
@@ -169,6 +170,8 @@ ModernizrPlugin.prototype.apply = function (compiler) {
     source.add(self.modernizrOutput);
 
     compilation.assets[filename] = new CachedSource(source);
+
+    cb();
   });
 };
 
