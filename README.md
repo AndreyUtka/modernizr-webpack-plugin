@@ -7,6 +7,7 @@ Includes support to integrate with [html-webpack-plugin](https://www.npmjs.com/p
 [![Build Status](https://travis-ci.org/alexpalombaro/modernizr-webpack-plugin.svg?branch=master)](https://travis-ci.org/alexpalombaro/modernizr-webpack-plugin)
 
 > This fork provides an additional option to add modernizr bundle to existing vendor bundle
+>
 > example: 
 > ```
 > new ModernizrWebpackPlugin({
